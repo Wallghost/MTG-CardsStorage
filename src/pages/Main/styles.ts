@@ -8,6 +8,7 @@ export const Content = styled.div`
   grid-gap: 10px;
   align-items: center;
   justify-content: center;
+  padding-bottom: 50px;
 `;
 
 export const Cards = styled.div`

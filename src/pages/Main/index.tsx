@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import api from '../../services/api';
 
 import { Content, Cards } from './styles';
+
+import Loading from '../../components/Loading';
 
 interface CardsProps {
   id: string;
@@ -11,55 +13,34 @@ interface CardsProps {
 }
 
 const Main: React.FC = () => {
-  // const CardsArrays: CardsProps = getCardsAPI();
+  const [cardList, setCardList] = useState<CardsProps[]>();
 
-  async function getCardsAPI(): Promise<[CardsProps]> {
-    const { data } = await api.get<CardsProps>('/cards');
+  async function getCardsAPI(): Promise<void> {
+    const { data } = await api.get<{ cards: CardsProps[] }>('/cards');
 
-    return [data];
+    data.cards = data.cards.filter(
+      (card, index, self) =>
+        index === self.findIndex((t) => t.name === card.name),
+    );
+
+    setCardList(data.cards);
   }
 
-  const cardsArrays = getCardsAPI();
-  console.log(cardsArrays);
-  const [cardList, setCardList] = useState<CardsProps[]>(() => {
-
-    if (cardsArrays) {
-      return [];
-    }
-
-    return [];
-  });
+  useEffect(() => {
+    getCardsAPI();
+  }, []);
 
   return (
     <Content>
-      {/* {
-        cardList.map(card => (
-          <Cards>
-            <img src={card.imageUrl} />
+      {!cardList ? (
+        <Loading />
+      ) : (
+        cardList.map((card) => (
+          <Cards key={card.id}>
+            <img src={card.imageUrl} alt={card.name} />
           </Cards>
-        ));
-      } */}
-      <Cards>
-        <img src="http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=409741&type=card" alt="Archangel Avacyn"/>
-      </Cards>
-      <Cards>
-        <img src="http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=409741&type=card" alt="Archangel Avacyn"/>
-      </Cards>
-      <Cards>
-        <img src="http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=409741&type=card" alt="Archangel Avacyn"/>
-      </Cards>
-      <Cards>
-        <img src="http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=409741&type=card" alt="Archangel Avacyn"/>
-      </Cards>
-      <Cards>
-        <img src="http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=409741&type=card" alt="Archangel Avacyn"/>
-      </Cards>
-      <Cards>
-        <img src="http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=409741&type=card" alt="Archangel Avacyn"/>
-      </Cards>
-      <Cards>
-        <img src="http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=409741&type=card" alt="Archangel Avacyn"/>
-      </Cards>
+        ))
+      )}
     </Content>
   );
 };
