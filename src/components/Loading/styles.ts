@@ -7,7 +7,7 @@ const Loading = styled.h1`
 
   img {
     height: 40px;
-    margin-left: 20px;
+    margin-left: 10px;
   }
 `;
 

@@ -3,11 +3,11 @@ import styled from 'styled-components';
 export const Content = styled.div`
   margin: 30px auto 0 auto;
   width: 80vw;
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  grid-gap: 10px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
   align-items: center;
-  justify-content: center;
+  justify-content: space-around;
   padding-bottom: 50px;
 `;
 
@@ -15,7 +15,8 @@ export const Cards = styled.div`
   cursor: pointer;
   width: 50px;
   height: 100px;
-  margin-top: 30px;
-  flex-direction: row;
-  margin: 20px 200px 200px 0;
+  // margin-top: 20px;
+  margin: 10px;
+  width: auto;
+  height: auto;
 `;
