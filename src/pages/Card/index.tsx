@@ -41,21 +41,28 @@ const CardDetails: React.FC = () => {
     getCardInfo();
   }, []);
 
-  console.log(cardInfo);
-
   return (
     <Content>
       {!cardInfo ? (
         <Loading />
       ) : (
         <>
-          <img src={cardInfo.card.imageUrl} alt={cardInfo.card.name}/>
+          <img src={cardInfo.card.imageUrl} alt={cardInfo.card.name} />
           <HeadInfo>
             <h1>{cardInfo.card.name}</h1>
-            <h3>{cardInfo.card.types.map((type) => (type))}</h3>
-            <h3>Mana Cost: {cardInfo.card.manaCost}</h3>
-            <h3>Colors: {cardInfo.card.colors.map((color) => (color))}</h3>
-            <p>{cardInfo.card.text}</p>
+            <h3>
+              Type:
+              {cardInfo.card.types.map((type) => type)}
+            </h3>
+            <h3>
+              Mana Cost:
+              {cardInfo.card.manaCost}
+            </h3>
+            <h3>
+              Color:
+              {cardInfo.card.colors.map((color) => color)}
+            </h3>
+            <p>"{cardInfo.card.text}"</p>
           </HeadInfo>
         </>
       )}
