@@ -3,12 +3,12 @@ import { Link } from 'react-router-dom';
 
 import api from '../../services/api';
 
-import CardPage from '../Card';
 import { SearchForm, Content, Cards } from './styles';
 
 import Loading from '../../components/Loading';
 
 interface CardsProps {
+  multiverseid: number;
   id: string;
   name: string;
   imageUrl: string;
@@ -40,7 +40,8 @@ const Main: React.FC = () => {
     const result = data.cards.filter(
       (card, index, self) =>
         index === self.findIndex((t) => t.name === card.name),
-    ).map(card => card.name);
+      )
+      .map((card) => card.name);
 
     setSuggest(result);
   }
@@ -60,7 +61,7 @@ const Main: React.FC = () => {
           type="text"
           placeholder="Type the name of the card"
           value={cardInput}
-          onChange={e => setCardInput(e.target.value)}
+          onChange={(e) => setCardInput(e.target.value)}
         />
       </SearchForm>
 
@@ -70,7 +71,7 @@ const Main: React.FC = () => {
         ) : (
           cardList.map((card) => (
             <Cards key={card.id}>
-              <Link to={`/detail/${card.name}`}>
+              <Link to={`/detail/${card.name}&${card.multiverseid}`}>
                 <img src={card.imageUrl} alt={card.name} />
               </Link>
             </Cards>
