@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useRouteMatch } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 import api from '../../services/api';
 
@@ -29,11 +29,11 @@ interface CardAttributes {
 }
 
 const CardDetails: React.FC = () => {
-  const { params } = useRouteMatch();
+  const { card_id } = useParams<{card_id: string}>();
   const [cardInfo, setCardInfo] = useState<CardAttributes>();
 
   async function getCardInfo(): Promise<void> {
-    const { data } = await api.get<CardAttributes>(`/cards/${params.card_id}`);
+    const { data } = await api.get<CardAttributes>(`/cards/${card_id}`);
     setCardInfo(data);
   }
 
